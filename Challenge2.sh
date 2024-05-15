@@ -14,6 +14,6 @@ SUBNET_ID=$(echo $INSTANCE_METADATA | jq -r '.Reservations[0].Instances[0].Subne
 REGION=$(echo $INSTANCE_METADATA | jq -r '.Reservations[0].Instances[0].Placement.Region')
 
 # Format metadata as JSON
-echo "{\"instance_id\": \"$INSTANCE_ID\", \"instance_name\": \"$INSTANCE_NAME\", \"instance_env\": \"$INSTANCE_ENV\"}"
+echo "{\"instance_id\": \"$INSTANCE_ID\", \"instance_name\": \"$INSTANCE_NAME\", \"instance_env\": \"$INSTANCE_ENV\", \"PUBLIC_IP\": \"$PUBLIC_IP\", \"PRIVATE_IP\": \"$PRIVATE_IP\", \"SUBNET_ID\": \"$SUBNET_ID\", \"REGION\": \"$REGION\"}"
 
 
