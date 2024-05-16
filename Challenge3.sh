@@ -1,12 +1,21 @@
 #!/bin/bash
 
-# Function to get the nested value from a JSON object
-# Arguments:
-#   $1 - JSON object
-#   $2 - Key path (e.g., "a/b/c")
-
 get_nested_value() {
-    echo "$1" | jq -r --argjson keys "[$2 | split(\"/\")[]]" 'getpath($keys)'
+    local obj="$1"
+    local key="$2"
+    local IFS='/'
+    local keys=($key)
+    local current_obj="$obj"
+
+    for k in "${keys[@]}"; do
+        current_obj=$(echo "$current_obj" | jq -r --arg k "$k" '.[$k]')
+        if [ "$current_obj" == "null" ]; then
+            echo "null"
+            return
+        fi
+    done
+
+    echo "$current_obj"
 }
 
 # Example usage:
